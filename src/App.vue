@@ -134,10 +134,12 @@ export default {
   computed: {
     filteredHotels() {
       return [
-        ...this.filteredCountry,
-        ...this.filteredStars,
-        ...this.filteredType,
-        ...this.filteredPrice,
+        ...new Set([
+          ...this.filteredCountry,
+          ...this.filteredStars,
+          ...this.filteredType,
+          ...this.filteredPrice,
+        ]),
       ];
     },
 
@@ -152,13 +154,11 @@ export default {
       );
     },
     filteredType() {
-      return this.hotels.filter((hotel) =>
-        this.filt.type.includes(hotel.type)
-      );
+      return this.hotels.filter((hotel) => this.filt.type.includes(hotel.type));
     },
     filteredPrice() {
-      return this.hotels.filter((hotel) =>
-        hotel["min_price"] >= this.filt.price
+      return this.hotels.filter(
+        (hotel) => hotel["min_price"] >= this.filt.price
       );
     },
   },
